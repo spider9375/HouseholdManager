@@ -1,0 +1,13 @@
+<form *ngIf="form" [formGroup]="form" class="flex flex-col p-3 gap-2">
+  <div class="grid grid-cols-3 gap-3">
+    <app-text-input label="Name" formControlName="name"></app-text-input>
+    <app-number-input label="Amount" formControlName="amount"></app-number-input>
+    <app-select-input label="Currency" [data]="currencyStore.currencyOptionItems()"
+                      formControlName="currency"></app-select-input>
+  </div>
+  <div class="grid grid-cols-3 gap-3">
+    <app-select-input label="Tag" [data]="tagsStore.tagsOptionItems()" formControlName="tag"></app-select-input>
+    <app-number-input label="Goal" formControlName="goal"></app-number-input>
+  </div>
+</form>
+

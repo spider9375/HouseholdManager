@@ -1,0 +1,29 @@
+<div class="flex flex-row justify-between">
+  <h1 class="text-xl">Tags</h1>
+  <div>
+    <button mat-flat-button class="mat-primary my-3" (click)="openModal()">
+      <mat-icon>add</mat-icon>
+      Add Tag
+    </button>
+  </div>
+</div>
+<app-table [columns]="columns"
+           [data]="tagStore.tags()"
+           [customColumns]="['color', 'icon']"
+           [customColumnsTemplate]="custom"
+           [actionColumnTemplate]="actions"
+></app-table>
+
+<ng-template #custom let-item="item" let-col="col">
+  <ng-container *ngIf="col === 'color'">
+    <app-tag-pill [tag]="item" displayColorCode></app-tag-pill>
+  </ng-container>
+  <ng-container *ngIf="col === 'icon'">
+    <mat-icon>{{ item.icon }}</mat-icon>
+  </ng-container>
+</ng-template>
+
+<ng-template #actions let-item="item">
+  <app-edit-button (click)="openModal(item)"></app-edit-button>
+  <app-delete-button (delete)="delete(item.id)"></app-delete-button>
+</ng-template>
