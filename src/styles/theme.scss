@@ -2,33 +2,14 @@
 
 @include mat.core();
 
-@import "@angular/material/prebuilt-themes/deeppurple-amber.css";
-
-/*@use '@angular/material' as mat;
-
-@include mat.core();
-
 $light-theme: mat.define-light-theme((
   color: (
-    primary: mat.define-palette(mat.$indigo-palette),
-    accent: mat.define-palette(mat.$pink-palette),
-  ),
-  density: -4,
-));
-
-$dark-theme: mat.define-dark-theme((
-  color: (
-    primary: mat.define-palette(mat.$purple-palette),
-    accent: mat.define-palette(mat.$blue-gray-palette),
+    primary: mat.define-palette(mat.$deep-purple-palette),
+    accent: mat.define-palette(mat.$amber-palette),
   ),
 ));
 
-@include mat.all-component-themes($dark-theme);
-
-.light-theme {
-  @include mat.all-component-colors($light-theme);
-  @include mat.all-component-densities($light-theme);
-}*/
+@include mat.all-component-themes($light-theme);
 
 @include mat.form-field-density((density: -4));
 
