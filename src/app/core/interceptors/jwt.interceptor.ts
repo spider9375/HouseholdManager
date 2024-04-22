@@ -11,6 +11,7 @@ import {
 import {EnvironmentInjector, inject, Injectable, runInInjectionContext} from "@angular/core";
 import {AuthService} from "../services/auth.service";
 import {Router} from "@angular/router";
+import {AuthStore} from "../stores/auth.store";
 
 const handleError = (err: HttpErrorResponse): Observable<any> => {
     if (err.status === 401 || err.status === 403) {
@@ -23,7 +24,7 @@ const handleError = (err: HttpErrorResponse): Observable<any> => {
 
 export const authenticationInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, next: HttpHandlerFn) => {
     const injector = inject(EnvironmentInjector);
-    let token = inject(AuthService).token();
+    let token = inject(AuthStore).token();
     if (token) {
         req = req.clone({
             setHeaders: {
@@ -32,19 +33,4 @@ export const authenticationInterceptor: HttpInterceptorFn = (req: HttpRequest<un
         });
     }
     return next(req).pipe(catchError(err => runInInjectionContext(injector, () => handleError(err))));
-}
-
-@Injectable()
-export class JwtInterceptor implements HttpInterceptor {
-    intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        let token = inject(AuthService).token();
-        if (token) {
-            request = request.clone({
-                setHeaders: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-        }
-        return next.handle(request).pipe(catchError(err => handleError(err)));
-    }
 }

@@ -1,9 +1,10 @@
 import {CanActivateFn, Router} from "@angular/router";
 import {inject} from "@angular/core";
 import {AuthService} from "../services/auth.service";
+import {AuthStore} from "../stores/auth.store";
 
 export const loggedInGuardFn: CanActivateFn = () => {
-    if (inject(AuthService).isLoggedIn()) {
+    if (inject(AuthStore).isLoggedIn()) {
         return true;
     }
 

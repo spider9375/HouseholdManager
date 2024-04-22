@@ -1,34 +1,37 @@
 import {Routes} from '@angular/router';
-import {SavingsComponent} from "./savings/savings.component";
-import {TagsComponent} from "./tags/tags.component";
-import {ItemsComponent} from "./items/items.component";
 import {AuthComponent} from "./core/components/auth/auth.component";
 import {loggedInGuardFn} from "./core/guards/logged-in.guard";
+import {LayoutComponent} from "./core/components/layout/layout.component";
 
 export const routes: Routes = [
     {
         path: "dashboard",
+        component: LayoutComponent,
         loadChildren: () => import("./dashboard/dashboard.routes").then(x => x.routes),
         canActivate: [loggedInGuardFn]
     },
     {
         path: "expenses",
+        component: LayoutComponent,
         loadChildren: () => import("./expenses/expenses.routes").then(x => x.routes),
         canActivate: [loggedInGuardFn]
     },
     {
         path: "savings",
-        component: SavingsComponent,
+        component: LayoutComponent,
+        loadChildren: () => import("./savings/savings.routes").then(x => x.routes),
         canActivate: [loggedInGuardFn]
     },
     {
         path: "items",
-        component: ItemsComponent,
+        component: LayoutComponent,
+        loadChildren: () => import("./items/items.routes").then(x => x.routes),
         canActivate: [loggedInGuardFn]
     },
     {
         path: "tags",
-        component: TagsComponent,
+        loadChildren: () => import("./tags/tags.routes").then(x => x.routes),
+        component: LayoutComponent,
         canActivate: [loggedInGuardFn]
     },
     {
