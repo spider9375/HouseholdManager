@@ -7,9 +7,17 @@
     </button>
   </div>
 </div>
+
+<div class="pb-2">
+  <mat-slide-toggle color="primary"
+                    [checked]="savingsStore.hideAmounts()"
+                    (change)="savingsStore.toggleHideAmounts$.next()">Hide amounts</mat-slide-toggle>
+</div>
+
 <div class="flex flex-row gap-3">
   @for (saving of savingsStore.savings(); track saving.id) {
     <app-savings-card [saving]="saving"
+                      [hideAmount]="savingsStore.hideAmounts()"
                       [tag]="tagsStore.tagById()[saving.tag]"
                       (delete)="savingsStore.delete$.next(saving.id)"
                       (edit)="openModal(saving)"

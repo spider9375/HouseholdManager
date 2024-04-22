@@ -12,10 +12,13 @@ export class SavingsStore {
 
     savings = computed(() => this._savings());
 
+    hideAmounts = signal<boolean>(false);
+
     fetch$ = this.service.getAll();
     create$ = new Subject<ISaving>()
     update$ = new Subject<ISaving>()
     delete$ = new Subject<number>();
+    toggleHideAmounts$ = new Subject<void>();
 
     constructor() {
         effect(() => {
@@ -34,6 +37,10 @@ export class SavingsStore {
                 this.delete$.pipe(
                     switchMap(id => this.service.delete(id).pipe(map(() => id))),
                     tap((id) => this._savings.update(prev => prev.filter(s => s.id !== id)))
+                ).subscribe()
+
+                this.toggleHideAmounts$.pipe(
+                    tap(() => this.hideAmounts.update(prev => !prev))
                 ).subscribe()
             }
         });
